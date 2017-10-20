@@ -5,13 +5,19 @@ de rainhas n nao tenha sido atingido, faz um backtrack
 a solucao retornada é sempre a primeira correta encontrada, porém há mais de uma correta
 =end
 
+def nqueens(rainhas)
+
+if rainhas < 4
+  return "ERRO"
+end
+
 #declaracao funcao que posiciona a rainha em um local seguro
 def posiciona(tab, rai, li, col)
 
 #verifica ataques em linha
   for i in 0..rai-1
     if tab[li][i] == "*"
-      ret = false
+      pos = false
       return
     end
   end
@@ -19,19 +25,17 @@ def posiciona(tab, rai, li, col)
 #verifica ataques em coluna
   for i in 0..rai-1
     if tab[i][col] == "*"
-      ret = false
+      pos = false
       return
     end
   end
 
 #verifica ataques diagonal principal
-
-  for i in (li).downto(0)
-	puts i
-    for j in (col).downto(0)	
-	puts j
-      if tab[i][j] == "*"
-	puts "ue"
+=begin
+  for i in li.downto(0)
+    for j in col.downto(0)
+      if tab[i][j] == "*"	
+        puts "hit"
         ret = false
         return
       end
@@ -41,55 +45,46 @@ def posiciona(tab, rai, li, col)
   for i in li..rai-1
     for j in col..rai-1
       if tab[i][j] == "*"
-	puts "uepa"
         ret = false
         return
       end
     end
   end
-
+=end
 
 #verifica ataques diagonal secundaria
 
-ret = true
+pos = true
 end
 
 #declaracao funcao que procura uma solucao
 def solucao(tab, rai, col)
 
 #se chegou ate a 4 linha, é pq de 0 a 3 foram preenchidas com as 4 rainhas
-  if col == rai
-    puts "finalizo"
-    fim = true
+  if col >= rai
+    sol = true
     return
   end
 
 #verifica linha por linha, em qual posicao a rainha esta segura
-  if fim != true
-    for li in 0..rai-1
-      ret = posiciona(tab, rai, li, col)
-      if ret == true
-        tab[li][col] = "*"
-        puts tab.inspect
-        fim = solucao(tab, rai, col + 1)
-#se nao foi achado lugar para a rainha, verifica se todas ja foram posicionas, se não, volta um passo(backtracking) para explorar outra solução
+   for li in 0..rai-1
+      pos = posiciona(tab, rai, li, col)
+      if pos == true
+         tab[li][col] = "*"
+         sol = solucao(tab, rai, col + 1)
+	 if sol != false
+	   sol = true
+           return
+         else
+#se nao foi achado lugar para a rainha, verifica se todas ja foram posicionadas, se não, volta um passo(backtracking) para explorar outra solução
+	   tab[li][col] = "-"
+         end
       end
     end
-    if fim != true
-      puts "apago"
-      puts li
-      tab[li][col] = "-"
-    end
-  end
-#return
 end
 
-###################### fim da declaracao de funçoes
-
 tabuleiro = []
-
-puts "qtd de rainhas"
-rainhas = gets.to_i
+sol = ""
 
 #cria o tabuleiro
 rainhas.times do
@@ -103,5 +98,17 @@ end
   end
 end
 
-solucao(tabuleiro, rainhas, 0)
-puts tabuleiro.inspect
+fim = solucao(tabuleiro, rainhas, 0)
+
+#preenche a string solucao
+(0..rainhas-1).each do |i|
+  (0..rainhas-1).each do |j|
+    sol << tabuleiro[i][j]
+  end
+  sol << "\n"
+end
+
+#puts sol
+	
+return sol
+end

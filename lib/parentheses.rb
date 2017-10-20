@@ -1,5 +1,7 @@
 #logica utilizada: criar uma pilha, a cada aparicao dos caracteres de "inicio" é adicionado à pilha, e a cada aparicao do caractere de "fim" é retirado da pilha. Se ao final houver algo na pilha, é pq n esta balanceado.
 
+def parentheses(exp)
+
 def verifica(pilha, par)
    if pilha.last != par
      result = false
@@ -9,7 +11,6 @@ def verifica(pilha, par)
    result
 end
 
-def parentheses(exp)
 
 pilha = []
 

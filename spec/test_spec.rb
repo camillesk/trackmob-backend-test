@@ -7,8 +7,15 @@ describe "nqueens" do
   end
 
   it "test nqueens with n=5" do
-    expect(nqueens(5)).to eq("*----\0---*-\n-*---\n----*\n--*--")
+    expect(nqueens(5)).to eq("*----\n---*-\n-*---\n----*\n--*--")
   end
+
+#teste de n rainhas < 3
+  it "test nqueens with n=3" do
+    expect(nqueens(3)).to eq("ERRO")
+  end
+
+end
 
 describe "roman numerals" do
 
@@ -36,6 +43,12 @@ describe "roman numerals" do
   it "generates roman numeral for 999" do
     expect(romanNumeral(999)).to eq("CMXCIX")
   end
+
+#teste de numero maior que 4000
+  it "generates roman numeral for 4001" do
+    expect(romanNumeral(4001)).to eq("ERRO")
+  end
+
 end
 
 describe "parentheses" do
@@ -72,3 +85,5 @@ describe "parentheses" do
   it "check if {()}[[{}]] is balanced" do
     expect(parentheses("{()}[[{}]]")).to eq(true)
   end
+
+end
